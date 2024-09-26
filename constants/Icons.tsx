@@ -1,6 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 
-export const icon = {
+interface IIcon {
+  [key: string] : ({ color, focused }: { color: string; focused: boolean; }) => React.JSX.Element
+  index: ({ color, focused }: { color: string; focused: boolean; }) => React.JSX.Element
+  discover: ({ color, focused }: { color: string; focused: boolean; }) => React.JSX.Element
+  saved: ({ color, focused }: { color: string; focused: boolean; }) => React.JSX.Element
+  settings: ({ color, focused }: { color: string; focused: boolean; }) => React.JSX.Element
+}
+
+export const icon:IIcon = {
   index: ({ color, focused }: { color: string; focused: boolean }) =>
     focused ? (
       <Ionicons name="home" size={24} color={color} />

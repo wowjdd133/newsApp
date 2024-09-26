@@ -9,6 +9,7 @@ const CountryList = [
   {name: 'Germany', code: 'DE',selected: false,}, 
   {name: 'Japan', code: 'JP',selected: false,}, 
   {name: 'Israel', code: 'IL',selected: false,},  
+  {name: 'Korea', code: 'KR',selected: false,},  
 ]
 
 export default CountryList;
