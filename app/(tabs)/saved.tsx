@@ -23,7 +23,7 @@ const Saved = (props: Props) => {
     if (token) {
       const res = JSON.parse(token);
       let bookmarkIds = res.join(',');
-      setIsLoading(true);
+      if (bookmarkNews.length === 0) setIsLoading(true);
       const news = await getNewsForId({
         id: bookmarkIds
       })

@@ -14,7 +14,7 @@ const NewsList = ({ newsList }: Props) => {
     return (
         <View style={styles.container}>
             {newsList.length === 0 ? <Loading size={'large'} /> : newsList.map((item, index) => (
-                <NewsItem item={item} />
+                <NewsItem key={index} item={item} />
             ))}
         </View>
     )

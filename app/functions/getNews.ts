@@ -15,12 +15,10 @@ export const getNews = async ({ country = 'kr', size = 5, category = '', query='
     if(category.length !== 0) {
         categoryString = `&category=${category}`
     }
-    console.log(categoryString);
     if(query.length !== 0) {
         queryString = `&q=${query}`
     }
 
-    console.log(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${categoryString}${countryString}${sizeString}${queryString}`);
     try {
         const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${categoryString}${countryString}${sizeString}${queryString}`);
         if (response && response.data) {

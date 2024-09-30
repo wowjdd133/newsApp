@@ -20,17 +20,22 @@ const Page = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // getBreakingNews();
-    // getNews('');
+    getBreakingNews();
+    getTrendingNews();
   }, [])
+
+  const getTrendingNews = async () => {
+    const newsData = await getNews({});
+    setNews(newsData);
+  }
 
   const getBreakingNews = async () => {
     try {
       setIsLoading(true);
-      // const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}&country=kr&size=5`);
-      // if (response && response.data) {
-      //   setBreakingNews(response.data.results);
-      // }
+      const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}&country=kr&size=5`);
+      if (response && response.data) {
+        setBreakingNews(response.data.results);
+      }
       const results = await getNews({});
       setBreakingNews(results);
     } catch (err) {
@@ -52,12 +57,12 @@ const Page = (props: Props) => {
     <ScrollView style={[styles.container, { paddingTop: safeTop + 10 }]}>
       <Header />
       <SearchBar withHorizontalPadding />
-      {/* {
+      {
         isLoading ? <Loading size={'large'}/> :
           <BreakingNews
             newsList={breakingNews}
           />
-      } */}
+      }
       <Categories
         onCatChanged={onCatChanged}
       />

@@ -18,19 +18,19 @@ const Page = (props: Props) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.itemBtn}>
       <Text style={styles.itemBtnTxt}>About</Text>
-      <MaterialIcons name='arrow-forward-ios' size={16} color={Colors.lightGrey}/>
+      <MaterialIcons name='arrow-forward-ios' size={22} color={Colors.lightGrey}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.itemBtn}>
       <Text style={styles.itemBtnTxt}>Send Feedback</Text>
-      <MaterialIcons name='arrow-forward-ios' size={16} color={Colors.lightGrey}/>
+      <MaterialIcons name='arrow-forward-ios' size={22} color={Colors.lightGrey}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.itemBtn}>
       <Text style={styles.itemBtnTxt}>Privacy Policy</Text>
-      <MaterialIcons name='arrow-forward-ios' size={16} color={Colors.lightGrey}/>
+      <MaterialIcons name='arrow-forward-ios' size={22} color={Colors.lightGrey}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.itemBtn}>
       <Text style={styles.itemBtnTxt}>Terms of Use</Text>
-      <MaterialIcons name='arrow-forward-ios' size={16} color={Colors.lightGrey}/>
+      <MaterialIcons name='arrow-forward-ios' size={22} color={Colors.lightGrey}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.itemBtn} onPress={toggleSwitch}>
       <Text style={styles.itemBtnTxt}>Dark Mode</Text>
@@ -40,12 +40,12 @@ const Page = (props: Props) => {
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
         value={isEnabled}
-        style={{transform: [{scale: 0.6}], marginBottom: -15, marginRight: -8}}
+        style={{marginBottom: -15, marginRight: -8}}
       />
       </TouchableOpacity>
       <TouchableOpacity style={styles.itemBtn}>
       <Text style={[styles.itemBtnTxt, {color: 'red'}]}>Logout</Text>
-      <MaterialIcons name='logout' size={16} color={'red'}/>
+      <MaterialIcons name='logout' size={22} color={'red'}/>
       </TouchableOpacity>
     </View>
     </>
@@ -66,11 +66,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 20,
     borderBottomColor: Colors.background,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    alignItems:'center'
   },
   itemBtnTxt: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '700',
 
   }
 })
