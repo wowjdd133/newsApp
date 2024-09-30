@@ -8,6 +8,8 @@ import Loading from '@/components/Loading'
 import { Colors } from '@/constants/Colors'
 import Moment from 'moment'
 import BackButton from '@/components/BackButton'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getBookmark } from '../functions/getBookmark'
 
 type Props = {}
 
@@ -15,6 +17,7 @@ const NewsDetails = (props: Props) => {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [news, setNews] = useState<NewsDataType>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [bookmark, setBookmark] = useState(false);
 
     useEffect(() => {
         getNewsForID();
@@ -26,6 +29,8 @@ const NewsDetails = (props: Props) => {
             const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}&id=${id}`);
             if (response && response.data) {
                 setNews(response.data.results[0]);
+                const { data } = await getBookmark(response.data.results[0].article_id);
+                if(data) setBookmark(true);
             }
             setIsLoading(false);
         } catch (err) {
@@ -33,23 +38,41 @@ const NewsDetails = (props: Props) => {
         }
     }
 
+    const saveBookmark = async (newsId: string) => {
+        setBookmark(true);
+        const { res, data = bookmark} = await getBookmark(newsId);
+        res.push(newsId);
+        AsyncStorage.setItem("bookmark", JSON.stringify(res));
+        alert("News Saved!");
+    }
+
+    const removeBookmark = async (newsId: string) => {
+        setBookmark(false);
+        const { res, data = bookmark} = await getBookmark(newsId);
+        const filteringBookmark = res.filter((id: string) => id !== newsId);
+        await AsyncStorage.setItem('bookmark', JSON.stringify(filteringBookmark));
+        alert("News unsaved!");
+    }
+
     return (
         <View style={styles.container}>
             <Stack.Screen options={{
                 headerLeft: () => (
-                    <BackButton/>
+                    <BackButton />
                 ),
                 headerRight: () =>
                 (
                     <TouchableOpacity onPress={() => {
-
-                    }}>
-                        <Ionicons name='heart-outline' size={22} />
+                        if (news) {
+                            bookmark ? removeBookmark(news.article_id) : saveBookmark(news.article_id)
+                        }
+                    }} >
+                        <Ionicons name={bookmark ? 'heart' : 'heart-outline'} size={22} color={bookmark ? 'red' : Colors.black} />
                     </TouchableOpacity>
                 ),
                 title: ''
             }} />
-            <View style={styles.contentContainer}>
+            <View style={styles.contentContainer} >
 
                 {
                     isLoading || news === undefined ? (
@@ -72,7 +95,7 @@ const NewsDetails = (props: Props) => {
                     )
                 }
             </View>
-        </View>
+        </View >
     )
 }
 

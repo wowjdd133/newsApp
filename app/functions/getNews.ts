@@ -8,19 +8,21 @@ type Props = {
 }
 
 export const getNews = async ({ country = 'kr', size = 5, category = '', query='' }: Props) => {
-    let countryString = `&country=${country}`
+    let countryString = country.length !== 0 ? `&country=${country}` : ''
     let sizeString = `&size=${size}`
     let categoryString = ``
     let queryString = ``
     if(category.length !== 0) {
         categoryString = `&category=${category}`
     }
+    console.log(categoryString);
     if(query.length !== 0) {
         queryString = `&q=${query}`
     }
 
+    console.log(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${categoryString}${countryString}${sizeString}${queryString}`);
     try {
-        const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${categoryString}${countryString}${sizeString}`);
+        const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${categoryString}${countryString}${sizeString}${queryString}`);
         if (response && response.data) {
             return response.data.results
         }
@@ -29,4 +31,17 @@ export const getNews = async ({ country = 'kr', size = 5, category = '', query='
     }
 
     return []
+}
+
+export const getNewsForId = async ({id}: {id: string}) => {
+    let idString = `&id=${id}`
+    try {
+        const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}${idString}`);
+        if (response && response.data) {
+            return response.data.results
+        }
+        return [];
+    } catch (err) {
+        console.log(err);
+    }
 }

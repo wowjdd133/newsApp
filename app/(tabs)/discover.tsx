@@ -26,7 +26,16 @@ const Page = (props: Props) => {
         {newsCategories.map((item) => (
           <CheckBox key={item.id} label={item.title} checked={item.selected} onPress={() => {
             toggleNewsCategory(item.id);
-            setCategory(item.slug);
+            if(item.selected) {
+              const selectedCategories = newsCategories.filter((category) => category.selected === true && category.slug !== item.slug);
+              if(selectedCategories.length !== 0) {
+                setCategory(selectedCategories[0].slug);
+              } else {
+                setCategory('');
+              }
+            } else {
+              setCategory(item.slug);
+            }
           }} />
         ))}
       </View>
@@ -35,13 +44,22 @@ const Page = (props: Props) => {
         {newsCountryList.map((item, index) => (
           <CheckBox key={index} label={item.name} checked={item.selected} onPress={() => {
             toggleNewsCountryList(index);
-            setCountry(item.code);
+            if(item.selected) {
+              const selectedCountries = newsCountryList.filter((country) => country.selected === true && country.code !== item.code);
+              if(selectedCountries.length !== 0) {
+                setCountry(selectedCountries[0].code);
+              } else {
+                setCountry('');
+              }
+            } else {
+              setCountry(item.code);
+            }
           }} />
         ))}
       </View>
 
       <Link href={{
-        pathname: `/news/search`,
+        pathname: `/news/Search`,
         params:{query: searchQuery, category, country}
       }} asChild>
       <TouchableOpacity style={styles.searchBtn}>

@@ -22,7 +22,6 @@ const Categories = ({onCatChanged}: Props) => {
         scrollRef.current?.scrollTo({x: x - 20, y: 0, animated:true})
       }
     })
-
     onCatChanged(newsCategoryList[index].slug);
   };
 
